@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   form: any = {};
-  isLoggedIn = false;
+  isLoggedIn = true;
   constructor() { }
 
   ngOnInit() {
