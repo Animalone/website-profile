@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountViewModel } from '../auth/accountViewModel';
 import {ApiService} from "../auth/api.service";
+import { AccountStorageService } from '../auth/account-storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,9 +14,17 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private accountStorage: AccountStorageService) { }
 
   ngOnInit() {
+    if (this.accountStorage.getUsername()) {
+      this.isLoggedIn = true;
+      this.form.username = this.accountStorage.getUsername();
+      this.form.email = this.accountStorage.getEmail();
+      this.form.name = this.accountStorage.getName();
+      this.form.date = this.accountStorage.getMyDate();
+      this.form.inputAddress = this.accountStorage.getAddress();
+    }
   }
   onSubmit() {
     console.log(this.form);
@@ -30,6 +40,11 @@ export class LoginComponent implements OnInit {
         console.log(data);
         this.isLoggedIn = true;
         this.isLoginFailed = false;
+        this.accountStorage.saveUsername(data.user_name);
+        this.accountStorage.saveName(data.name);
+        this.accountStorage.saveAddress(data.address);
+        this.accountStorage.saveEmail(data.email);
+        this.accountStorage.saveMyDate(data.date);
       },
       error => {
         console.log(error);

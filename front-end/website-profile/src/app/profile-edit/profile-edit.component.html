@@ -7,14 +7,14 @@
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="name">Your name</label>
-        <input type="text" class="form-control" name="name" [(ngModel)]="form.name" #name="ngModel" required />
+        <input type="text" class="form-control" name="name" placeholder={{name}} [(ngModel)]="form.name" #name="ngModel" required />
         <div *ngIf="f.submitted && name.invalid">
           <div *ngIf="name.errors.required">Name is required</div>
         </div>
       </div>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" readonly class="form-control" value ="test"name="username" [(ngModel)]="form.username" #username="ngModel"
+        <input type="text" readonly class="form-control" value ={{username}} name="username" [(ngModel)]="form.username" #username="ngModel"
           required />
       </div>
       <div class="form-group">
@@ -28,7 +28,7 @@
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel" required email />
+        <input type="text" class="form-control" name="email" placeholder={{email}} [(ngModel)]="form.email" #email="ngModel" required email />
         <div *ngIf="f.submitted && email.invalid">
           <div *ngIf="email.errors.required">Email is required</div>
           <div *ngIf="email.errors.email">Email must be a valid email address</div>
@@ -43,7 +43,7 @@
       </div>
       <div class="form-group">
           <label for="inputAddress">Address</label>
-          <input type="text" class="form-control" name="inputAddress" placeholder="Your Address" [(ngModel)]="form.inputAddress" #inputAddress="ngModel" required inputAddress />
+          <input type="text" class="form-control" name="inputAddress" placeholder={{inputAddress}} [(ngModel)]="form.inputAddress" #inputAddress="ngModel" required inputAddress />
           <div *ngIf="f.submitted && inputAddress.invalid">
           	<div *ngIf="inputAddress.errors.required">Address is required</div>
           </div>
