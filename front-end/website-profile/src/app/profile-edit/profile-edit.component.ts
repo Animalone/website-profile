@@ -35,16 +35,16 @@ export class ProfileEditComponent implements OnInit {
       this.form.email,
       this.form.date,
       this.form.inputAddress);
-
+    this.accountStorage.saveUsername(this.form.username);
+    this.accountStorage.saveName(this.form.name);
+    this.accountStorage.saveAddress(this.form.inputAddress);
+    this.accountStorage.saveEmail(this.form.email);
+    this.accountStorage.saveMyDate(this.form.date);
     this.apiService.registerAccount(this.accountViewModel).subscribe(
       data => {
         console.log(data);
-        this.accountStorage.saveUsername(data.user_name);
-        this.accountStorage.saveName(data.name);
-        this.accountStorage.saveAddress(data.address);
-        this.accountStorage.saveEmail(data.email);
-        this.accountStorage.saveMyDate(data.date);
         this.isUpdateFail = false;
+        // this.reloadPage();
         this.router.navigate(['login']);
       },
       error => {
@@ -54,5 +54,7 @@ export class ProfileEditComponent implements OnInit {
       }
     );
   }
-
+  reloadPage() {
+    window.location.reload();
+  }
 }

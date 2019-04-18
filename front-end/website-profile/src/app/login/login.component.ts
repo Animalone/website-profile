@@ -44,7 +44,12 @@ export class LoginComponent implements OnInit {
         this.accountStorage.saveName(data.name);
         this.accountStorage.saveAddress(data.address);
         this.accountStorage.saveEmail(data.email);
-        this.accountStorage.saveMyDate(data.date);
+        this.accountStorage.saveMyDate(data.birthDate);
+        this.form.username = this.accountStorage.getUsername();
+        this.form.email = this.accountStorage.getEmail();
+        this.form.name = this.accountStorage.getName();
+        this.form.date = this.accountStorage.getMyDate();
+        this.form.inputAddress = this.accountStorage.getAddress();
       },
       error => {
         console.log(error);
@@ -52,49 +57,9 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       })
   }
+  logout(){
+    this.accountStorage.signOut();
+    this.isLoggedIn = false;
+  }
 
 }
-
-
-// import { TokenStorageService } from '../auth/token-storage.service';
-
-
-// export class LoginComponent implements OnInit {
-
-//   private loginInfo: AuthLoginInfo;
-
-//   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
-
-//   ngOnInit() {
-//     if (this.tokenStorage.getToken()) {
-//       this.isLoggedIn = true;
-//       this.roles = this.tokenStorage.getAuthorities();
-//     }
-//   }
-
-//   onSubmit() {
-
-
-//     this.authService.attemptAuth(this.loginInfo).subscribe(
-//       data => {
-//         this.tokenStorage.saveToken(data.accessToken);
-//         this.tokenStorage.saveUsername(data.username);
-//         this.tokenStorage.saveAuthorities(data.authorities);
-
-//         this.isLoginFailed = false;
-//         this.isLoggedIn = true;
-//         this.roles = this.tokenStorage.getAuthorities();
-//         this.reloadPage();
-//       },
-//       error => {
-//         console.log(error);
-//         this.errorMessage = error.error.message;
-//         this.isLoginFailed = true;
-//       }
-//     );
-//   }
-
-//   reloadPage() {
-//     window.location.reload();
-//   }
-// }
