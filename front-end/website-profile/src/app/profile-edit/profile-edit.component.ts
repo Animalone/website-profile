@@ -3,6 +3,7 @@ import { AccountStorageService } from '../auth/account-storage.service';
 import {ApiService} from "../auth/api.service";
 import { AccountViewModel } from '../auth/accountViewModel';
 import {HttpClient} from "@angular/common/http";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-edit',
@@ -14,7 +15,7 @@ export class ProfileEditComponent implements OnInit {
   form: any = {};
   errorMessage = '';
   accountViewModel: AccountViewModel;
-  constructor(private accountStorage: AccountStorageService, private apiService: ApiService) { }
+  constructor(private router: Router, private accountStorage: AccountStorageService, private apiService: ApiService) { }
 
   ngOnInit() {
   	if (this.accountStorage.getUsername()) {
@@ -38,7 +39,13 @@ export class ProfileEditComponent implements OnInit {
     this.apiService.registerAccount(this.accountViewModel).subscribe(
       data => {
         console.log(data);
+        this.accountStorage.saveUsername(data.user_name);
+        this.accountStorage.saveName(data.name);
+        this.accountStorage.saveAddress(data.address);
+        this.accountStorage.saveEmail(data.email);
+        this.accountStorage.saveMyDate(data.date);
         this.isUpdateFail = false;
+        this.router.navigate(['login']);
       },
       error => {
         console.log(error);
